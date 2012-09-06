@@ -45,6 +45,7 @@ int main(int argc, char** argv) {
     if (out == NULL || line_idx == max_lines) {
       if (out != NULL) {
         file_idx++;
+        line_idx = 0;
 #ifdef USE_ZLIB
         gzclose(out);
 #else
