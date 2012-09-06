@@ -28,7 +28,7 @@ void showusage() {
 }
 
 int main(int argc, char** argv) {
-  if(argc != 5)
+  if (argc != 5)
     showusage();
 
   // TODO: Better arg parsing
@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
   char* prefix = argv[4];
   int maxCharsToHash = 7;
 
-  if(colNum < 0)
+  if (colNum < 0)
     showusage();
 
 #ifdef USE_ZLIB
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
   FILE* shards[shardCount];
 #endif
 
-  for(int i=0; i<shardCount; ++i) {
+  for (int i=0; i<shardCount; ++i) {
     char filename[MAX_FILENAME_LEN];
     sprintf(filename, "%s%06d.gz", prefix, i);
 #ifdef USE_ZLIB
@@ -67,15 +67,15 @@ int main(int argc, char** argv) {
   }
 
   char str[MAX_LINE_LEN];
-  while(fgets(str, MAX_LINE_LEN, stdin)) {
+  while (fgets(str, MAX_LINE_LEN, stdin)) {
     int n = strlen(str);
 
     char* colBegin = str;
     char* colEnd = strstr(str, delim);
-    if(colEnd == NULL)
+    if (colEnd == NULL)
       colEnd = str + n - 1; // -1 to hack off newline
     
-    for(int i=1; i <= colNum; ++i) {
+    for (int i=1; i <= colNum; ++i) {
       colBegin = colEnd += delimLen;
       colEnd = strstr(colBegin, delim);
       if(colEnd == NULL)
@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
     // now we have the column -- hash it
     unsigned hashCode = 0;
     char* lastPos = MIN(colEnd, colBegin + maxCharsToHash);
-    for(char* c = colBegin; c != lastPos; ++c) {
+    for (char* c = colBegin; c != lastPos; ++c) {
       hashCode = hashCode * 31 + *c;
     }
 
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
 #endif
   }
 
-  for(int i=0; i<shardCount; ++i) {
+  for (int i=0; i<shardCount; ++i) {
 #ifdef USE_ZLIB
     gzclose(shards[i]);
 #else
