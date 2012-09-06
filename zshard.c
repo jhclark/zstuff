@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 2 // required for popen
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
